@@ -31,13 +31,14 @@ En ce qui concerne les images inline, j'ai choisis de mettre des liens internet,
  
  Après, on récupère les propriétés du fichier "properties" : 
  
- ````java
+ ```java
  try {
 			properties.load(new FileInputStream(new File("src/main/resources/javamail.properties")));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		}```
-    
+		}
+
+```
 Cette méthode permet de récupérer automatiquement les propriétés de javamail, à condition que les clés soient exactes.
 
 On ouvre une session avec le mail de l'expéditeur et son mot de passe, que l'on peut prendre depuis le fichier "properties" :
@@ -49,7 +50,8 @@ String mail = properties.getProperty("mail.smtp.from");
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(mail, passe);
 			}
-		});```
+		});
+```
     
  
     
