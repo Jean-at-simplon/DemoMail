@@ -86,5 +86,7 @@ Les données envoyées au template sont sous la forme d'une hashmap<key,value>, 
  On instancie un objet "multipart" pour signifier que le message peut avoir plusieurs types mime, "related" lui fait comprendre que des images seront insérer dans le mail. On y ajoute le corps du message que l'on met dans l'objet message. Puis on envoie le tout avec la méthode ```java Transport.send(message)```
  
  Et le message est parti.
+ 
+ N'hésitez pas à utiliser et partager le code.
     
 		
