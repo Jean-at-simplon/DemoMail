@@ -51,8 +51,40 @@ String mail = properties.getProperty("mail.smtp.from");
 				return new PasswordAuthentication(mail, passe);
 			}
 		});
+
 ```
-    
+
+On prépare le message avec l'expéditeur, le destinataire et le sujet. Puis, on instancie le corps du message.
+
+Là commence la configuration du template.
+La première ligne permet de determiner quelle configuration de freemarker on va utiliser, car chaque version est diffèrente d'une autre. La seconde ligne indique ou trouver le template, ensuite, quel type d'encodage on utilise. Les deux dernieres ne sont pas obligatoires, mais utilent pour trouver d'ou viennent les problèmes.
+```java
+Configuration configuration = new Configuration(Configuration.VERSION_2_3_26);
+configuration.setDirectoryForTemplateLoading(new File("src/main/resources/templates"));
+configuration.setDefaultEncoding("UTF-8");
+configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+configuration.setLogTemplateExceptions(false);
+
+```
+Puis, on instancie le template et on lui indique son nom. 
+Les données envoyées au template sont sous la forme d'une hashmap<key,value>, la key étant le nom de la variable du template que l'on souhaite écrire. Puis on instancie un String avec la méthode "writer" qui permet d'écrire les string en sortie et on procède à l'écriture des données.
+```java
+	Template template = configuration.getTemplate("email"+statut+".ftlh");
+						
+	Map<String, String> rootMap = new HashMap<String, String>();
+	rootMap.put("statut", statut);
+	rootMap.put("nom", "LEFRANCOIS");
+	rootMap.put("prenom", "Jean");
+	rootMap.put("typeConge", "Congé payé");
+	rootMap.put("debutConge", "21/07/2017");
+	rootMap.put("finConge", "01/01/2028");
+	rootMap.put("numDemande", "JEAN00001");
+	Writer out = new StringWriter();
+	template.process(rootMap, out);
+ ```
+ On ajoute le template dans le corps du message.
+ On instancie un objet "multipart" pour signifier que le message peut avoir plusieurs types mime, "related" lui fait comprendre que des images seront insérer dans le mail. On y ajoute le corps du message que l'on met dans l'objet message. Puis on envoie le tout avec la méthode ```java Transport.send(message)```
  
+ Et le message est parti.
     
 		
