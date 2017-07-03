@@ -11,6 +11,8 @@ Il faut inserer dans le pom :
 - Activation
 - Freemarker
 
+Ces jar sont à chercher dans les dépots Maven. Pour Freemarker, il faut prendre la derniere version 2.3.26
+
 Dans "resources", faire un fichier .properties pour y mettre les parametres de connexion du mail, en respectant bien les noms des proprietes de javamail, par exemple : 
 - mail.smtp.host=smtp.gmail.com
 - mail.smtp.socketFactory.port=587.
